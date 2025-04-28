@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+	  <!-- NuGet Info -->
+	  <PackageId>DeltaCore.SMSService</PackageId>
+	  <Authors>Ahmed Nady</Authors>
+	  <Company>DeltaCore</Company>
+	  <PackageTags>sms,twilio, otp</PackageTags>
+	  <Description>This is a NuGet package for DeltaCore SMS Service, Send messages, sms, and otp and verify otp.</Description>
+	  <RepositoryUrl>https://github.com/AhmedNady2003/SMSService</RepositoryUrl>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+	  <!-- Versioning -->
+	  <Version>$(PackageVersion)</Version>
+	  <GitCommitHash>$(GitCommitHash)</GitCommitHash>
+	  <GitTag>$(GitTag)</GitTag>
+  </PropertyGroup>
+	
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.4" />
+    <PackageReference Include="Twilio" Version="7.10.0" />
+	  <None Include="../README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
