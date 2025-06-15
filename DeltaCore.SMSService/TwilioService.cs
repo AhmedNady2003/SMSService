@@ -110,5 +110,36 @@ namespace DeltaCore.SMSService
                 return false;
             }
         }
+
+        public async Task<string?> SendOTPAsync(string phoneNumber, string key, string channel = "sms", CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                if (_otpSentTimes.ContainsKey(phoneNumber))
+                {
+                    var lastSentTime = _otpSentTimes[phoneNumber];
+                    if (DateTime.UtcNow - lastSentTime < TimeSpan.FromSeconds(60))
+                    {
+                        _logger.LogWarning("[Twilio Warning] OTP already sent recently.");
+                        return null;
+                    }
+                }
+
+                var verification = await VerificationResource.CreateAsync(
+                    to: phoneNumber,
+                    channel: channel, // "sms" or "call"
+                    pathServiceSid: _twilio.VerifyServiceSID
+                );
+
+                _otpSentTimes[phoneNumber] = DateTime.UtcNow;
+
+                return verification.Sid;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "[Twilio Error] Failed to send OTP.");
+                return null;
+            }
+        }
     }
 }
